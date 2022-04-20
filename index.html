@@ -9,6 +9,32 @@
     <title>Todo List Application</title>
 </head>
 <body>
-    
+    <div class="app">
+        <!-- Create Sidebar -->
+        <aside class="sidebar">
+            <header class="header">
+                <h1 class="header-title">My Categories</h1>
+                <form class="sidebar-form" data-new-category-form>
+                    <div class="form-control">
+                        <input type="text" placeholder="Enter Category" data-new-category-input>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Add Category
+                    </button>
+                </form>
+            </header>
+            <ul class="sidebar-list" data-categories>
+                <li class="sidebar-item">All Categories</li>
+                <li class="sidebar-item">
+                    Work
+                    <input type="color" class="sidebar-color">
+                </li>
+                <li class="sidebar-item">
+                    School
+                    <input type="color" class="sidebar-color">
+                </li>
+            </ul>
+        </aside>
+    </div>
 </body>
 </html>
