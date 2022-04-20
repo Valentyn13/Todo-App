@@ -1,0 +1,103 @@
+:root {
+    --primary-color: #333;
+    --light-color: #f8f8ff;
+    --success-color: #5cb85c;
+    --error-color: #d9534f;
+}
+
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    background-color: #eaeef7;
+    color: var(--primary-color);
+    font-family: "Lato", sans-serif;
+    line-height: 1.6;
+    padding: 32px;
+    height: 100vh;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 225px 1fr;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Utilities */
+.btn {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    display: inline-block;
+    padding: 12.50px 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+}
+
+.btn:hover {
+    transform: scale(0.98);
+}
+
+/* Header */
+.header {
+    color: var(--primary-color);
+    padding: 1.6rem;
+    position: sticky;
+    top: 0;
+}
+
+.header-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+
+/* Sidebar Form */
+.sidebar-form .form-control {
+    margin: 10px 0;
+}
+
+.sidebar-form input {
+    border: 0;
+    width: 100%;
+    padding: 3px 0;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.sidebar-form button {
+    width: 100%;
+}
+/* Sidebar List */
+.sidebar-list {
+    padding: 1.6rem;
+}
+
+.sidebar-item {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    margin: 16px 0;
+    cursor: pointer;
+    font-size: 1.75rem;
+}
+
+.sidebar-item.active {
+    font-weight: bold;
+}
+
+.sidebar-item:first-child {
+    margin-top: 0;
+}
+
+.sidebar-color {
+    border: none;
+    width: 25px;
+    margin-left: auto;
+    cursor: pointer;
+}
