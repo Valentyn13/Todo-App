@@ -101,3 +101,94 @@ body {
     margin-left: auto;
     cursor: pointer;
 }
+.main {
+    background-color: var(--light-color);
+    overflow-y: scroll;
+}
+
+.main::-webkit-scrollbar {
+    display: none;
+}
+
+.main .header {
+    background: var(--light-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;   
+}
+
+/* Create and Edit Form */
+.create-todo-form input, .edit-todo-form input,
+.create-todo-form select, .edit-todo-form select {
+    border: 0;
+    width: 100%;
+    padding: 3px 0;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.create-todo-form input:focus, .edit-todo-form input:focus,
+.create-todo-form select:focus, .edit-todo-form select:focus {
+    outline: none;
+}
+
+.create-todo-form, .edit-todo-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex: .8;
+}
+
+.create-todo-form input, .edit-todo-form input {
+    border-bottom: 1px solid #b4b3cb;
+    width: 350px;
+}
+
+.edit-todo-form {
+    display: none;
+}
+
+/* Cards */
+.todos-container {
+    display: grid;
+    grid-template-columns: repeat(4,1fr); 
+    grid-auto-rows: max-content;
+    gap: 20px;
+    padding: 1.6rem;
+}
+
+.todo {
+    background-color: #fff;
+    color: var(--primary-color);
+    border-top: 6px solid;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.todo-tag {
+    font-size: 1.6rem;
+    padding: .5rem 2.5rem;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.todo-description {
+    font-size: 1.6rem;
+    margin: 1rem 0 2rem 0;
+    word-break: break-all;
+}
+
+.todo-actions {
+    margin-top: auto;
+}
+
+.todo-actions i {
+    font-size: 1.6rem;
+    margin-right: 1.6rem;
+    opacity: 0.25;
+    cursor: pointer;
+}
