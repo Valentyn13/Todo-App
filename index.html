@@ -42,20 +42,35 @@
                     <h1 class="header-title">Welcome Back, <strong>Developer Studio</strong></h1>
                     <div class="currently-viewing" data-currently-viewing>You are currently viewing All Categories</div>
                 </div>
+            <!-- Create Todo Form -->
+            <form class="create-todo-form" data-new-todo-form>
+                <div class="form-control">
+                    <select data-new-todo-select required>
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <input type="text" data-new-todo-input placeholder="Enter Todo" required>
+                </div>
+                <button class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add Todo
+                </button>
+            </form>
+                            <!-- Update Todo Form -->
+                            <form class="edit-todo-form" data-edit-todo-form>
+                                <div class="form-control">
+                                    <select data-edit-todo-select>
+                                        <option value="">All Categories</option>
+                                    </select>
+                                </div>
+                                <div class="form-control">
+                                    <input type="text" data-edit-todo-input placeholder="Enter Todo" required>
+                                </div>
+                                <button class="btn btn-primary">Save</button>
+                            </form>
+                        </header>
     </div>
-        <!-- Create Todo Form -->
-        <form class="create-todo-form" data-new-todo-form>
-            <div class="form-control">
-                <select data-new-todo-select required>
-                    <option value="">All Categories</option>
-                </select>
-            </div>
-            <div class="form-control">
-                <input type="text" data-new-todo-input placeholder="Enter Todo" required>
-            </div>
-            <button class="btn btn-primary">
-                <i class="fa fa-plus" aria-hidden="true"></i> Add Todo
-            </button>
-        </form>
+
+
 </body>
 </html>
