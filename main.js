@@ -20,4 +20,15 @@ newCategoryForm.addEventListener('submit', (event) => {
     if (isCategoryEmpty) {
         return console.log('Enter the task!');
     }
+
+    categories.push({_id: Date.now.toString(), category: category, color: randomHexolor() });
 })
+
+
+
+// Auxiliary Functions
+function getRandomHexColor() {
+    var hex = (Math.round(Math.random() * 0xffffff)).toString(16);
+    while (hex.length < 6) hex = "0" + hex;
+    return `#${hex}`;
+}
