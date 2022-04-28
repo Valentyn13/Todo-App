@@ -36,13 +36,24 @@ function saveAndRender() {
 }
 
 function save() {
+    localStorage.setItem(LOCAL_STORAGE_CATEGORIES_KEYS,JSON.stringify(categories));
 
 }
 
 function render() {
 
+    renderCategories()
 }
 
+function renderCategories() {
+
+    categoriesContainer.innerHTML += `<li class="sidebar-item">All Categories</li>`;
+    categories.forEach(({_id,category,color}) =>{
+        categoriesContainer.innerHTML += `<li class="sidebar-item" data-category-id${_id}>${category}<input type="color" value=${color} class="sidebar-color">`;
+    })
+
+
+}
 
 // Auxiliary Functions
 function getRandomHexColor() {
@@ -50,3 +61,6 @@ function getRandomHexColor() {
     while (hex.length < 6) hex = "0" + hex;
     return `#${hex}`;
 }
+
+
+window.addEventListener('load',render);
