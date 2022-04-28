@@ -1,7 +1,7 @@
 'use strict'
 
-const newCategoryForm = document.querySelector('[data-new-categore-form]');
-const newCategoryInput = document.querySelector('[data-new-categore-input');
+const newCategoryForm = document.querySelector('[data-new-category-form]');
+const newCategoryInput = document.querySelector('[data-new-category-input');
 const categoriesContainer = document.querySelector('[data-categories]');
 
 const LOCAL_STORAGE_CATEGORIES_KEYS = 'LOCAL_STORAGE_CATEGORIES_KEYS';
@@ -21,9 +21,27 @@ newCategoryForm.addEventListener('submit', (event) => {
         return console.log('Enter the task!');
     }
 
-    categories.push({_id: Date.now.toString(), category: category, color: randomHexolor() });
+    categories.push({_id: Date.now.toString(), category: category, color: getRandomHexColor() });
+
+    newCategoryInput.value = '';
+
+    saveAndRender()
 })
 
+
+// Functions
+function saveAndRender() {
+    save();
+    render();
+}
+
+function save() {
+
+}
+
+function render() {
+
+}
 
 
 // Auxiliary Functions
