@@ -41,8 +41,8 @@ function save() {
 }
 
 function render() {
-
-    renderCategories()
+    clearChildElements(categoriesContainer);
+    renderCategories();
 }
 
 function renderCategories() {
@@ -64,3 +64,10 @@ function getRandomHexColor() {
 
 
 window.addEventListener('load',render);
+
+
+function clearChildElements(element) {
+    while(element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
