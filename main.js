@@ -2,9 +2,18 @@
 
 const newCategoryForm = document.querySelector("[data-new-category-form]");
 const newCategoryInput = document.querySelector("[data-new-category-input");
+
 const categoriesContainer = document.querySelector("[data-categories]");
 
+const newTodoForm = document.querySelector("[data-new-todo-form]");
+const newTodoSelect = document.querySelector("[data-new-todo-select]");
+const newTodoInput = document.querySelector("[data-new-todo-input]");
+
+const todosContainer = document.querySelector("[data-cards]");
+
 const LOCAL_STORAGE_CATEGORIES_KEYS = "LOCAL_STORAGE_CATEGORIES_KEYS";
+const LOCAL_STORAGE_TODOS_KEYS = "LOCAL_STORAGE_TODOS_KEYS";
+
 
 //Application Data
 let categories =
