@@ -18,6 +18,8 @@ const LOCAL_STORAGE_TODOS_KEYS = "LOCAL_STORAGE_TODOS_KEYS";
 //Application Data
 let categories =
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS)) || [];
+  let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
+
 // Add categories
 newCategoryForm.addEventListener("submit", (event) => {
   event.preventDefault; // Форма не будет обновлятся/сбрасиватся
@@ -40,6 +42,17 @@ newCategoryForm.addEventListener("submit", (event) => {
   newCategoryInput.value = "";
 
   saveAndRender();
+});
+
+//Add todos
+newTodoForm.addEventListener('submit', (event) => {
+  event.preventDefault;
+
+  todos.push({
+    _id: Date.now().toString(),
+    categoryId: newTodoSelect.value,
+    todo: newTodoInput,
+  });
 });
 
 // Functions
