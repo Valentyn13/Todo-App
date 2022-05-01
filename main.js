@@ -71,6 +71,10 @@ function save() {
     LOCAL_STORAGE_CATEGORIES_KEYS,
     JSON.stringify(categories)
   );
+  localStorage.setItem(
+    LOCAL_STORAGE_TODOS_KEYS,
+    JSON.stringify(todos)
+  );
 }
 
 function render() {
