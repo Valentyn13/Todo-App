@@ -53,6 +53,11 @@ newTodoForm.addEventListener('submit', (event) => {
     categoryId: newTodoSelect.value,
     todo: newTodoInput,
   });
+
+  newTodoSelect.value = '';
+  newCategoryInput.value = '';
+
+  saveAndRender();
 });
 
 // Functions
