@@ -79,7 +79,11 @@ function save() {
 
 function render() {
   clearChildElements(categoriesContainer);
+  clearChildElements(newTodoSelect);
+
   renderCategories();
+  renderFormOptions();
+
 }
 
 function renderCategories() {
@@ -87,6 +91,13 @@ function renderCategories() {
   categories.forEach(({ _id, category, color }) => {
     categoriesContainer.innerHTML += `<li class="sidebar-item" data-category-id${_id}>${category}<input type="color" value=${color} class="sidebar-color">`;
   });
+}
+
+function renderFormOptions () {
+  newTodoSelect.innerHTML += `<option value="">All CAtegories</option`;
+  categories.forEach(({_id,category}) => {
+    newTodoSelect.innerHTML += `<option value=${_id}>${category}</option`;
+  })
 }
 
 // Auxiliary Functions
