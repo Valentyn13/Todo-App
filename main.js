@@ -34,7 +34,7 @@ newCategoryForm.addEventListener("submit", (event) => {
   }
 
   categories.push({
-    _id: Date.now.toString(),
+    _id: Date.now().toString(),
     category: category,
     color: getRandomHexColor(),
   });
@@ -51,11 +51,11 @@ newTodoForm.addEventListener('submit', (event) => {
   todos.push({
     _id: Date.now().toString(),
     categoryId: newTodoSelect.value,
-    todo: newTodoInput,
+    todo: newTodoInput.value,
   });
 
   newTodoSelect.value = '';
-  newCategoryInput.value = '';
+  newTodoInput.value = '';
 
   saveAndRender();
 });
@@ -103,22 +103,22 @@ function renderFormOptions () {
 }
 
 function renderTodos () {
-  todos.forEach(({_id, categoryId, todo}) => {
-    const {color,category} = categories.find(({_id}) =>_id === categoryId);
-    const backgroundColor = convertHexToRGBA(color,20);
+  todos.forEach(({ _id, categoryId, todo }) => {
 
+    // Get Complimentary categoryDetails Based On TaskId
+    const {color,category} = categories.find(({_id}) => _id === categoryId);
+    const backgroundColor = convertHexToRGBA(color, 20);
     todosContainer.innerHTML += `
-    <div class="todo" style="border-color: ${color};">
-    <div class="todo-tag" style="background-color: rgba(0, 0, 0, 0.5); color: black;">
+  <div class="todo" style="border-color: ${color}">
+      <div class="todo-tag" style="background-color: ${backgroundColor}; color: ${color};">
         ${category}
-    </div>
-    <p class="todo-description">
-        ${todo}
-    </p>
-    <div class="todo-actions">
-        <i class="far fa-edit" data-edit-todo="${_id}"></i>
-        <i class="far fa-trash-alt" data-delete-todo="${_id}"></i>
-    </div>`
+      </div>
+      <p class="todo-description">${todo}</p>
+      <div class="todo-actions">
+        <i class="far fa-edit" data-edit-todo=${_id}></i>
+        <i class="far fa-trash-alt" data-delete-todo=${_id}></i>
+      </div>
+  </div>`;
   })
 
 }
@@ -143,10 +143,11 @@ function convertHexToRGBA(hexCode, opacity) {
   return `rgba(${r},${g},${b},${opacity / 100})`;
 }
 
-window.addEventListener("load", render);
+
 
 function clearChildElements(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
 }
+window.addEventListener("load", render);
