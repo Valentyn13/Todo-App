@@ -80,9 +80,11 @@ function save() {
 function render() {
   clearChildElements(categoriesContainer);
   clearChildElements(newTodoSelect);
+  clearChildElements(todosContainer);
 
   renderCategories();
   renderFormOptions();
+  renderTodos();
 
 }
 
@@ -100,11 +102,45 @@ function renderFormOptions () {
   })
 }
 
+function renderTodos () {
+  todos.forEach(({_id, categoryId, todo}) => {
+    const {color,category} = categories.find(({_id}) =>_id === categoryId);
+    const backgroundColor = convertHexToRGBA(color,20);
+
+    todosContainer.innerHTML += `
+    <div class="todo" style="border-color: ${color};">
+    <div class="todo-tag" style="background-color: rgba(0, 0, 0, 0.5); color: black;">
+        ${category}
+    </div>
+    <p class="todo-description">
+        ${todo}
+    </p>
+    <div class="todo-actions">
+        <i class="far fa-edit" data-edit-todo="${_id}"></i>
+        <i class="far fa-trash-alt" data-delete-todo="${_id}"></i>
+    </div>`
+  })
+
+}
 // Auxiliary Functions
 function getRandomHexColor() {
   var hex = Math.round(Math.random() * 0xffffff).toString(16);
   while (hex.length < 6) hex = "0" + hex;
   return `#${hex}`;
+}
+
+function convertHexToRGBA(hexCode, opacity) {
+  let hex = hexCode.replace('#', '');
+
+  if (hex.length === 3) {
+      hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+  }
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return `rgba(${r},${g},${b},${opacity / 100})`;
 }
 
 window.addEventListener("load", render);
