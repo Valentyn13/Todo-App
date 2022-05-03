@@ -105,6 +105,7 @@ function render() {
   clearChildElements(categoriesContainer);
   clearChildElements(newTodoSelect);
   clearChildElements(todosContainer);
+  clearChildElements(editTodoSelect);
 
   renderCategories();
   renderFormOptions();
@@ -121,8 +122,11 @@ function renderCategories() {
 
 function renderFormOptions () {
   newTodoSelect.innerHTML += `<option value="">All CAtegories</option`;
+  editTodoSelect.innerHTML += `<option value="">Select A Category</option>`;
+
   categories.forEach(({_id,category}) => {
     newTodoSelect.innerHTML += `<option value=${_id}>${category}</option`;
+    editTodoSelect.innerHTML += `<option value=${_id}>${category}</option>`;
   })
 }
 
