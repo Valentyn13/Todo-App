@@ -60,6 +60,16 @@ newTodoForm.addEventListener('submit', (event) => {
   saveAndRender();
 });
 
+todosContainer.addEventListener('click', (event) => {
+  if (event.target.classList[1] === 'fa-trash-alt') {
+    const todoToDeleteIndex = todos.findIndex((todo) => todo._id === event.target.dataset.deleteTodo);
+
+    todos.splice(todoToDeleteIndex, 1);
+
+    saveAndRender();
+}
+})
+
 // Functions
 function saveAndRender() {
   save();
