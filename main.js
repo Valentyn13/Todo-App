@@ -8,6 +8,10 @@ const categoriesContainer = document.querySelector("[data-categories]");
 const newTodoForm = document.querySelector("[data-new-todo-form]");
 const newTodoSelect = document.querySelector("[data-new-todo-select]");
 const newTodoInput = document.querySelector("[data-new-todo-input]");
+// Selector for edit todo form
+const editTodoForm = document.querySelector('[data-edit-todo-form]');
+const editTodoSelect = document.querySelector('[data-edit-todo-select]');
+const editTodoInput = document.querySelector('[data-edit-todo-input]');
 
 const todosContainer = document.querySelector("[data-cards]");
 
@@ -60,6 +64,8 @@ newTodoForm.addEventListener('submit', (event) => {
   saveAndRender();
 });
 
+
+let todoToEdit = null;
 todosContainer.addEventListener('click', (event) => {
   if (event.target.classList[1] === 'fa-trash-alt') {
     const todoToDeleteIndex = todos.findIndex((todo) => todo._id === event.target.dataset.deleteTodo);
@@ -67,6 +73,14 @@ todosContainer.addEventListener('click', (event) => {
     todos.splice(todoToDeleteIndex, 1);
 
     saveAndRender();
+}
+if(event.target.classList[1] === 'fa-edit') {
+  newTodoForm.style.display = 'none';
+  editTodoForm.style.display = 'flex';
+  todoToEdit = todos.find((todo) => todo._id === event.target.dataset.eidtTodo)
+
+  editTodoSelect.value = todoToEdit.categoryId;
+  editTodoInput.value = todoToEdit.todo;
 }
 })
 
