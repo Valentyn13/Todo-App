@@ -67,22 +67,24 @@ newTodoForm.addEventListener('submit', (event) => {
 
 let todoToEdit = null;
 todosContainer.addEventListener('click', (event) => {
-  if (event.target.classList[1] === 'fa-trash-alt') {
-    const todoToDeleteIndex = todos.findIndex((todo) => todo._id === event.target.dataset.deleteTodo);
+    if (event.target.classList[1] === 'fa-edit') {
+        newTodoForm.style.display = 'none';
+        editTodoForm.style.display = 'flex';
 
-    todos.splice(todoToDeleteIndex, 1);
+        todoToEdit = todos.find((todo) => todo._id === event.target.dataset.editTodo);
 
-    saveAndRender();
-}
-if(event.target.classList[1] === 'fa-edit') {
-  newTodoForm.style.display = 'none';
-  editTodoForm.style.display = 'flex';
-  todoToEdit = todos.find((todo) => todo._id === event.target.dataset.eidtTodo)
+        editTodoSelect.value = todoToEdit.categoryId;
+        editTodoInput.value = todoToEdit.todo;
+    }
+    if (event.target.classList[1] === 'fa-trash-alt') {
+        const todoToDeleteIndex = todos.findIndex((todo) => todo._id === event.target.dataset.deleteTodo);
 
-  editTodoSelect.value = todoToEdit.categoryId;
-  editTodoInput.value = todoToEdit.todo;
-}
-})
+        todos.splice(todoToDeleteIndex, 1);
+
+        saveAndRender();
+    }
+});
+
 
 // Functions
 function saveAndRender() {
