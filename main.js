@@ -66,6 +66,20 @@ newTodoForm.addEventListener('submit', (event) => {
 
 
 let todoToEdit = null;
+editTodoForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  todoToEdit.categoryId = editTodoSelect.value;
+  todoToEdit.todo = editTodoInput.value;
+
+  editTodoForm.style.display = 'none';
+  newTodoForm.style.display = 'flex';
+
+  editTodoSelect.value = '';
+  editTodoInput.value = '';
+
+  saveAndRender();
+});
 todosContainer.addEventListener('click', (event) => {
     if (event.target.classList[1] === 'fa-edit') {
         newTodoForm.style.display = 'none';
@@ -84,6 +98,8 @@ todosContainer.addEventListener('click', (event) => {
         saveAndRender();
     }
 });
+
+
 
 
 // Functions
