@@ -1,34 +1,37 @@
 "use strict";
-
+// Selectors for new category form
 const newCategoryForm = document.querySelector("[data-new-category-form]");
 const newCategoryInput = document.querySelector("[data-new-category-input");
 
+// Selector for categories container
 const categoriesContainer = document.querySelector("[data-categories]");
 
+// Selector for new todo form
 const newTodoForm = document.querySelector("[data-new-todo-form]");
 const newTodoSelect = document.querySelector("[data-new-todo-select]");
 const newTodoInput = document.querySelector("[data-new-todo-input]");
+
 // Selector for edit todo form
 const editTodoForm = document.querySelector('[data-edit-todo-form]');
 const editTodoSelect = document.querySelector('[data-edit-todo-select]');
 const editTodoInput = document.querySelector('[data-edit-todo-input]');
 
+// Selector for todos container
 const todosContainer = document.querySelector("[data-cards]");
 
+// Local storage keys
 const LOCAL_STORAGE_CATEGORIES_KEYS = "LOCAL_STORAGE_CATEGORIES_KEYS";
 const LOCAL_STORAGE_TODOS_KEYS = "LOCAL_STORAGE_TODOS_KEYS";
 
 
 //Application Data
-let categories =
-  JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS)) || [];
-  let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
+let categories =JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS)) || [];
+let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
 
 // Add categories
 newCategoryForm.addEventListener("submit", (event) => {
-  event.preventDefault; // Форма не будет обновлятся/сбрасиватся
-
-  // Get value from input field
+  event.preventDefault;  // Форма не будет обновлятся/сбрасиватся
+ // Get value from input field
   const category = newCategoryInput.value;
 
   // Validation
@@ -64,7 +67,7 @@ newTodoForm.addEventListener('submit', (event) => {
   saveAndRender();
 });
 
-
+//Save edit todos
 let todoToEdit = null;
 editTodoForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -80,6 +83,8 @@ editTodoForm.addEventListener('submit', (event) => {
 
   saveAndRender();
 });
+
+//Edit and delete todos
 todosContainer.addEventListener('click', (event) => {
     if (event.target.classList[1] === 'fa-edit') {
         newTodoForm.style.display = 'none';
@@ -98,8 +103,6 @@ todosContainer.addEventListener('click', (event) => {
         saveAndRender();
     }
 });
-
-
 
 
 // Functions
@@ -168,6 +171,8 @@ function renderTodos () {
   })
 
 }
+
+
 // Auxiliary Functions
 function getRandomHexColor() {
   var hex = Math.round(Math.random() * 0xffffff).toString(16);
