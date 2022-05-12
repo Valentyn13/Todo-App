@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 // Selectors for new category form
-const newCategoryForm = document.querySelector("[data-new-category-form]");
-const newCategoryInput = document.querySelector("[data-new-category-input");
+const newCategoryForm = document.querySelector('[data-new-category-form]');
+const newCategoryInput = document.querySelector('[data-new-category-input]');
 
 // Selector for categories container
-const categoriesContainer = document.querySelector("[data-categories]");
+const categoriesContainer = document.querySelector('[data-categories]');
 
 // Selector for new todo form
-const newTodoForm = document.querySelector("[data-new-todo-form]");
-const newTodoSelect = document.querySelector("[data-new-todo-select]");
-const newTodoInput = document.querySelector("[data-new-todo-input]");
+const newTodoForm = document.querySelector('[data-new-todo-form]');
+const newTodoSelect = document.querySelector('[data-new-todo-select]');
+const newTodoInput = document.querySelector('[data-new-todo-input]');
 
 // Selector for edit todo form
 const editTodoForm = document.querySelector('[data-edit-todo-form]');
@@ -17,42 +17,42 @@ const editTodoSelect = document.querySelector('[data-edit-todo-select]');
 const editTodoInput = document.querySelector('[data-edit-todo-input]');
 
 // Selector for todos container
-const todosContainer = document.querySelector("[data-cards]");
+const todosContainer = document.querySelector('[data-cards]');
 
 // Local storage keys
-const LOCAL_STORAGE_CATEGORIES_KEYS = "LOCAL_STORAGE_CATEGORIES_KEYS";
-const LOCAL_STORAGE_TODOS_KEYS = "LOCAL_STORAGE_TODOS_KEYS";
+const LOCAL_STORAGE_CATEGORIES_KEYS = 'LOCAL_STORAGE_CATEGORIES_KEYS';
+const LOCAL_STORAGE_TODOS_KEYS = 'LOCAL_STORAGE_TODOS_KEYS';
 
 
 //Application Data
-let categories =JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS)) || [];
-let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
+const categories = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS)) || [];
+const todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
 
 // Add categories
-newCategoryForm.addEventListener("submit", (event) => {
+newCategoryForm.addEventListener('submit', event => {
   event.preventDefault;  // Форма не будет обновлятся/сбрасиватся
- // Get value from input field
+  // Get value from input field
   const category = newCategoryInput.value;
 
   // Validation
   const isCategoryEmpty = !category || !category.trim().length;
   if (isCategoryEmpty) {
-    return console.log("Enter the task!");
+    return console.log('Enter the task!');
   }
 
   categories.push({
     _id: Date.now().toString(),
-    category: category,
+    category,
     color: getRandomHexColor(),
   });
 
-  newCategoryInput.value = "";
+  newCategoryInput.value = '';
 
   saveAndRender();
 });
 
 //Add todos
-newTodoForm.addEventListener('submit', (event) => {
+newTodoForm.addEventListener('submit', event => {
   event.preventDefault;
 
   todos.push({
@@ -69,7 +69,7 @@ newTodoForm.addEventListener('submit', (event) => {
 
 //Save edit todos
 let todoToEdit = null;
-editTodoForm.addEventListener('submit', (event) => {
+editTodoForm.addEventListener('submit', event => {
   event.preventDefault();
 
   todoToEdit.categoryId = editTodoSelect.value;
@@ -85,23 +85,23 @@ editTodoForm.addEventListener('submit', (event) => {
 });
 
 //Edit and delete todos
-todosContainer.addEventListener('click', (event) => {
-    if (event.target.classList[1] === 'fa-edit') {
-        newTodoForm.style.display = 'none';
-        editTodoForm.style.display = 'flex';
+todosContainer.addEventListener('click', event => {
+  if (event.target.classList[1] === 'fa-edit') {
+    newTodoForm.style.display = 'none';
+    editTodoForm.style.display = 'flex';
 
-        todoToEdit = todos.find((todo) => todo._id === event.target.dataset.editTodo);
+    todoToEdit = todos.find(todo => todo._id === event.target.dataset.editTodo);
 
-        editTodoSelect.value = todoToEdit.categoryId;
-        editTodoInput.value = todoToEdit.todo;
-    }
-    if (event.target.classList[1] === 'fa-trash-alt') {
-        const todoToDeleteIndex = todos.findIndex((todo) => todo._id === event.target.dataset.deleteTodo);
+    editTodoSelect.value = todoToEdit.categoryId;
+    editTodoInput.value = todoToEdit.todo;
+  }
+  if (event.target.classList[1] === 'fa-trash-alt') {
+    const todoToDeleteIndex = todos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
 
-        todos.splice(todoToDeleteIndex, 1);
+    todos.splice(todoToDeleteIndex, 1);
 
-        saveAndRender();
-    }
+    saveAndRender();
+  }
 });
 
 
@@ -112,14 +112,8 @@ function saveAndRender() {
 }
 
 function save() {
-  localStorage.setItem(
-    LOCAL_STORAGE_CATEGORIES_KEYS,
-    JSON.stringify(categories)
-  );
-  localStorage.setItem(
-    LOCAL_STORAGE_TODOS_KEYS,
-    JSON.stringify(todos)
-  );
+  localStorage.setItem(LOCAL_STORAGE_CATEGORIES_KEYS, JSON.stringify(categories));
+  localStorage.setItem(LOCAL_STORAGE_TODOS_KEYS, JSON.stringify(todos));
 }
 
 function render() {
@@ -141,21 +135,21 @@ function renderCategories() {
   });
 }
 
-function renderFormOptions () {
+function renderFormOptions() {
   newTodoSelect.innerHTML += `<option value="">All CAtegories</option`;
   editTodoSelect.innerHTML += `<option value="">Select A Category</option>`;
 
-  categories.forEach(({_id,category}) => {
+  categories.forEach(({ _id, category }) => {
     newTodoSelect.innerHTML += `<option value=${_id}>${category}</option`;
     editTodoSelect.innerHTML += `<option value=${_id}>${category}</option>`;
-  })
+  });
 }
 
-function renderTodos () {
+function renderTodos() {
   todos.forEach(({ _id, categoryId, todo }) => {
 
     // Get Complimentary categoryDetails Based On TaskId
-    const {color,category} = categories.find(({_id}) => _id === categoryId);
+    const { color, category } = categories.find(({ _id }) => _id === categoryId);
     const backgroundColor = convertHexToRGBA(color, 20);
     todosContainer.innerHTML += `
   <div class="todo" style="border-color: ${color}">
@@ -168,15 +162,15 @@ function renderTodos () {
         <i class="far fa-trash-alt" data-delete-todo=${_id}></i>
       </div>
   </div>`;
-  })
+  });
 
 }
 
 
 // Auxiliary Functions
 function getRandomHexColor() {
-  var hex = Math.round(Math.random() * 0xffffff).toString(16);
-  while (hex.length < 6) hex = "0" + hex;
+  let hex = Math.round(Math.random() * 0xffffff).toString(16);
+  while (hex.length < 6) hex = '0' + hex;
   return `#${hex}`;
 }
 
@@ -184,7 +178,7 @@ function convertHexToRGBA(hexCode, opacity) {
   let hex = hexCode.replace('#', '');
 
   if (hex.length === 3) {
-      hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+    hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
   }
 
   const r = parseInt(hex.substring(0, 2), 16);
@@ -201,4 +195,4 @@ function clearChildElements(element) {
     element.removeChild(element.firstChild);
   }
 }
-window.addEventListener("load", render);
+window.addEventListener('load', render);
