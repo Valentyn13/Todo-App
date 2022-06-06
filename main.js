@@ -1,4 +1,7 @@
 'use strict';
+
+// CONSTANTS :
+const COLOR_WHITE = 0xffffff;
 // Selectors for new category form
 const newCategoryForm = document.querySelector('[data-new-category-form]');
 const newCategoryInput = document.querySelector('[data-new-category-input]');
@@ -173,7 +176,7 @@ function renderTodos() {
 
 // Auxiliary Functions
 function getRandomHexColor() {
-  let hex = Math.round(Math.random() * 0xffffff).toString(16);
+  let hex = Math.round(Math.random() * COLOR_WHITE).toString(16);
   while (hex.length < 6) hex = '0' + hex;
   return `#${hex}`;
 }
