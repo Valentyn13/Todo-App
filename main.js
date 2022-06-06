@@ -131,7 +131,11 @@ function render() {
 function renderCategories() {
   categoriesContainer.innerHTML += `<li class="sidebar-item">All Categories</li>`;
   categories.forEach(({ _id, category, color }) => {
-    categoriesContainer.innerHTML += `<li class="sidebar-item" data-category-id${_id}>${category}<input type="color" value=${color} class="sidebar-color">`;
+    categoriesContainer.innerHTML += `
+    <li class="sidebar-item" data-category-id${_id}>
+    ${category}
+    <input type="color" value=${color} class="sidebar-color">
+    `;
   });
 }
 
