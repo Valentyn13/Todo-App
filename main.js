@@ -69,7 +69,7 @@ newTodoForm.addEventListener('submit', event => {
 
 //Save edit todos
 let todoToEdit = null;
-editTodoForm.addEventListener('submit', event => {
+editTodoForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   todoToEdit.categoryId = editTodoSelect.value;
