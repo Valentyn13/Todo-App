@@ -30,7 +30,7 @@ const todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
 
 // Add categories
 newCategoryForm.addEventListener('submit', event => {
-  event.preventDefault;  // Форма не будет обновлятся/сбрасиватся
+  event.preventDefault();  // Форма не будет обновлятся/сбрасиватся
   // Get value from input field
   const category = newCategoryInput.value;
 
