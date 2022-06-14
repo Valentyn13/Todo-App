@@ -2,6 +2,7 @@
 
 // CONSTANTS :
 const COLOR_WHITE = 0xffffff;
+const SHORT_COLOR = 3;
 // Selectors for new category form
 const newCategoryForm = document.querySelector('[data-new-category-form]');
 const newCategoryInput = document.querySelector('[data-new-category-input]');
@@ -182,17 +183,12 @@ function getRandomHexColor() {
 }
 
 function convertHexToRGBA(hexCode, opacity) {
-  let hex = hexCode.replace('#', '');
+  let hex = hexCode.substring(1,hexCode.length)
 
-  if (hex.length === 3) {
-    hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+  if (hex.length === SHORT_COLOR) {
+    const [r, g, b] = hex.split('').map((s) => parseInt(s + s))
+    return `rgba(${r},${g},${b},${opacity / 100})`;
   }
-
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  return `rgba(${r},${g},${b},${opacity / 100})`;
 }
 
 
