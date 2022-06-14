@@ -32,8 +32,8 @@ const categories = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS
 const todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
 
 // Add categories
-newCategoryForm.addEventListener('submit', event => {
-  event.preventDefault();  // Форма не будет обновлятся/сбрасиватся
+newCategoryForm.addEventListener('submit', (event) => {
+  event.preventDefault();
   // Get value from input field
   const category = newCategoryInput.value;
 
@@ -55,7 +55,7 @@ newCategoryForm.addEventListener('submit', event => {
 });
 
 //Add todos
-newTodoForm.addEventListener('submit', event => {
+newTodoForm.addEventListener('submit', (event) => {
   event.preventDefault;
 
   todos.push({
@@ -88,18 +88,18 @@ editTodoForm.addEventListener('submit', (event) => {
 });
 
 //Edit and delete todos
-todosContainer.addEventListener('click', event => {
+todosContainer.addEventListener('click', (event) => {
   if (event.target.classList[1] === 'fa-edit') {
     newTodoForm.style.display = 'none';
     editTodoForm.style.display = 'flex';
 
-    todoToEdit = todos.find(todo => todo._id === event.target.dataset.editTodo);
+    todoToEdit = todos.find((todo) => todo._id === event.target.dataset.editTodo);
 
     editTodoSelect.value = todoToEdit.categoryId;
     editTodoInput.value = todoToEdit.todo;
   }
   if (event.target.classList[1] === 'fa-trash-alt') {
-    const todoToDeleteIndex = todos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
+    const todoToDeleteIndex = todos.findIndex((todo) => todo._id === event.target.dataset.deleteTodo);
 
     todos.splice(todoToDeleteIndex, 1);
 
