@@ -69,23 +69,6 @@ todos = todos.filter(todo => todo.categoryId != index)
   }
   });
 
-
-
-  // let index = null
-  // categoriesContainer.addEventListener('click', event => {
-  //   index = event.target.dataset.removeBtn
-  //   if(event.target.classList.contains('remove-btn')){
-  
-  // todos = todos.filter(todo => todo.categoryId != index)
-  //       const categoryToDeleteIndex = categories.findIndex(category =>category._id === event.target.dataset.removeBtn);
-  //       categories.splice(categoryToDeleteIndex,1)
-  //       saveAndRender();
-  //   }
-  //   });
-
-
-
-
 //Add todos
 newTodoForm.addEventListener('submit', event => {
   event.preventDefault();
@@ -138,7 +121,7 @@ todosContainer.addEventListener('click', event => {
   if (event.target.classList[1] === 'fa-trash-alt') {
     const todoToDeleteIndex = todos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
     todos.splice(todoToDeleteIndex, 1);
-    
+
   if(curentViewTodos != null) {
     const curentViewTodoToDelete = curentViewTodos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
     curentViewTodos.splice(todoToDeleteIndex, 1);
