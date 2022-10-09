@@ -1,13 +1,15 @@
 'use strict';
 // Selectors for new category form
-const newCategoryForm = document.querySelector('[data-new-category-form]');
-const newCategoryInput = document.querySelector('[data-new-category-input]');
+const newCategoryForm = document.querySelector('[data-new-category-form]'); // В форме находится инпут и кнопка
+const newCategoryInput = document.querySelector('[data-new-category-input]'); // Получаем инпут
 
 // Selector for categories container
 const categoriesContainer = document.querySelector('[data-categories]');
-
+//const romoveCategoryButton = document.querySelector('[]')
 // Selector for new todo form
+const curentlyViewingLable = document.querySelector('[data-currently-viewing]')
 const newTodoForm = document.querySelector('[data-new-todo-form]');
+const curentCategoryView = document.querySelector('[data-view-category]')
 const newTodoSelect = document.querySelector('[data-new-todo-select]');
 const newTodoInput = document.querySelector('[data-new-todo-input]');
 
@@ -23,21 +25,22 @@ const todosContainer = document.querySelector('[data-cards]');
 const LOCAL_STORAGE_CATEGORIES_KEYS = 'LOCAL_STORAGE_CATEGORIES_KEYS';
 const LOCAL_STORAGE_TODOS_KEYS = 'LOCAL_STORAGE_TODOS_KEYS';
 
+let curentViewTodos = null;
 
 //Application Data
 const categories = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CATEGORIES_KEYS)) || [];
-const todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
+let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
 
 // Add categories
 newCategoryForm.addEventListener('submit', event => {
-  event.preventDefault;  // Форма не будет обновлятся/сбрасиватся
+  event.preventDefault();
   // Get value from input field
   const category = newCategoryInput.value;
 
   // Validation
   const isCategoryEmpty = !category || !category.trim().length;
   if (isCategoryEmpty) {
-    return console.log('Enter the task!');
+    return alert('Enter the task!');
   }
 
   categories.push({
@@ -50,10 +53,42 @@ newCategoryForm.addEventListener('submit', event => {
 
   saveAndRender();
 });
+// Delete category
+let index = null
+categoriesContainer.addEventListener('click', event => {
+  index = event.target.dataset.removeBtn
+  if(event.target.classList.contains('fa-trash-alt')){
+
+todos = todos.filter(todo => todo.categoryId != index)
+      const categoryToDeleteIndex = categories.findIndex(category =>category._id === event.target.dataset.removeBtn);
+      categories.splice(categoryToDeleteIndex,1)
+   if(curentViewTodos != null) {
+    curentViewTodos = null
+   }
+      saveAndRender();
+  }
+  });
+
+
+
+  // let index = null
+  // categoriesContainer.addEventListener('click', event => {
+  //   index = event.target.dataset.removeBtn
+  //   if(event.target.classList.contains('remove-btn')){
+  
+  // todos = todos.filter(todo => todo.categoryId != index)
+  //       const categoryToDeleteIndex = categories.findIndex(category =>category._id === event.target.dataset.removeBtn);
+  //       categories.splice(categoryToDeleteIndex,1)
+  //       saveAndRender();
+  //   }
+  //   });
+
+
+
 
 //Add todos
 newTodoForm.addEventListener('submit', event => {
-  event.preventDefault;
+  event.preventDefault();
 
   todos.push({
     _id: Date.now().toString(),
@@ -66,6 +101,7 @@ newTodoForm.addEventListener('submit', event => {
 
   saveAndRender();
 });
+
 
 //Save edit todos
 let todoToEdit = null;
@@ -91,18 +127,40 @@ todosContainer.addEventListener('click', event => {
     editTodoForm.style.display = 'flex';
 
     todoToEdit = todos.find(todo => todo._id === event.target.dataset.editTodo);
-
+    if(curentViewTodos != null) {
+      todoToEdit = curentViewTodos.find(todo => todo._id === event.target.dataset.editTodo);
+      editTodoSelect.value = todoToEdit.categoryId;
+      editTodoInput.value = todoToEdit.todo;
+    }
     editTodoSelect.value = todoToEdit.categoryId;
     editTodoInput.value = todoToEdit.todo;
   }
   if (event.target.classList[1] === 'fa-trash-alt') {
     const todoToDeleteIndex = todos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
-
     todos.splice(todoToDeleteIndex, 1);
+    
+  if(curentViewTodos != null) {
+    const curentViewTodoToDelete = curentViewTodos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
+    curentViewTodos.splice(todoToDeleteIndex, 1);
+  }
+    
 
     saveAndRender();
   }
 });
+
+// Show current category
+
+
+curentCategoryView.addEventListener('change',event => {
+  curentViewTodos = todos.filter(todo => todo.categoryId == curentCategoryView.value)
+  if(curentViewTodos.length == 0){
+    curentViewTodos = null;
+  }
+  console.log(curentCategoryView.value)
+  console.log(curentViewTodos)
+  saveAndRender()
+})
 
 
 // Functions
@@ -121,48 +179,91 @@ function render() {
   clearChildElements(newTodoSelect);
   clearChildElements(todosContainer);
   clearChildElements(editTodoSelect);
-
+  clearChildElements(curentCategoryView)
+  clearChildElements(curentlyViewingLable)
   renderCategories();
   renderFormOptions();
   renderTodos();
-
 }
 
 function renderCategories() {
   categoriesContainer.innerHTML += `<li class="sidebar-item">All Categories</li>`;
   categories.forEach(({ _id, category, color }) => {
-    categoriesContainer.innerHTML += `<li class="sidebar-item" data-category-id${_id}>${category}<input type="color" value=${color} class="sidebar-color">`;
+    categoriesContainer.innerHTML += `
+    <li class="sidebar-item" data-category-id${_id}>
+    ${category}
+    <input type="color" value=${color} class="sidebar-color">
+    <i class="far fa-trash-alt" data-remove-btn=${_id}></i>
+    </li>`;
+
+    // <button class="remove-btn" data-remove-btn=${_id}>remove<button>
   });
 }
 
 function renderFormOptions() {
   newTodoSelect.innerHTML += `<option value="">All CAtegories</option`;
   editTodoSelect.innerHTML += `<option value="">Select A Category</option>`;
-
+  curentCategoryView.innerHTML += `<option value="">Select A Category</option>`
+  curentCategoryView.innerHTML += `<option value="0">All Categories</option>`
   categories.forEach(({ _id, category }) => {
     newTodoSelect.innerHTML += `<option value=${_id}>${category}</option`;
     editTodoSelect.innerHTML += `<option value=${_id}>${category}</option>`;
+    curentCategoryView.innerHTML += `<option value=${_id}>${category}</option>`;
   });
 }
-
+/////////////////////////////////////////////////
 function renderTodos() {
-  todos.forEach(({ _id, categoryId, todo }) => {
 
-    // Get Complimentary categoryDetails Based On TaskId
-    const { color, category } = categories.find(({ _id }) => _id === categoryId);
-    const backgroundColor = convertHexToRGBA(color, 20);
-    todosContainer.innerHTML += `
-  <div class="todo" style="border-color: ${color}">
-      <div class="todo-tag" style="background-color: ${backgroundColor}; color: ${color};">
-        ${category}
-      </div>
-      <p class="todo-description">${todo}</p>
-      <div class="todo-actions">
-        <i class="far fa-edit" data-edit-todo=${_id}></i>
-        <i class="far fa-trash-alt" data-delete-todo=${_id}></i>
-      </div>
-  </div>`;
-  });
+  if (curentViewTodos == null){
+
+    todos.forEach(({ _id, categoryId, todo }) => {
+
+      // Get Complimentary categoryDetails Based On TaskId
+      const { color, category } = categories.find(({ _id }) => _id === categoryId);
+      const backgroundColor = convertHexToRGBA(color, 20);
+      curentlyViewingLable.innerHTML =`
+      <div class="currently-viewing" data-currently-viewing>
+        You are currently viewing All Categories
+      </div>`;
+      todosContainer.innerHTML += `
+    <div class="todo" style="border-color: ${color}">
+        <div class="todo-tag" style="background-color: ${backgroundColor}; color: ${color};">
+          ${category}
+        </div>
+        <p class="todo-description">${todo}</p>
+        <div class="todo-actions">
+          <i class="far fa-edit" data-edit-todo=${_id}></i>
+          <i class="far fa-trash-alt" data-delete-todo=${_id}></i>
+        </div>
+    </div>`;
+    });
+
+  } else {
+
+ 
+    curentViewTodos.forEach(({ _id, categoryId, todo }) => {
+
+      // Get Complimentary categoryDetails Based On TaskId
+      const { color, category } = categories.find(({ _id }) => _id === categoryId);
+      const backgroundColor = convertHexToRGBA(color, 20);
+      curentlyViewingLable.innerHTML =`
+      <div class="currently-viewing" data-currently-viewing>
+        You are currently viewing ${category}
+      </div>`;
+      todosContainer.innerHTML += `
+    <div class="todo" style="border-color: ${color}">
+        <div class="todo-tag" style="background-color: ${backgroundColor}; color: ${color};">
+          ${category}
+        </div>
+        <p class="todo-description">${todo}</p>
+        <div class="todo-actions">
+          <i class="far fa-edit" data-edit-todo=${_id}></i>
+          <i class="far fa-trash-alt" data-delete-todo=${_id}></i>
+        </div>
+    </div>`;
+    });
+  
+  }
 
 }
 

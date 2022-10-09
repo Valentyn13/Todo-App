@@ -43,6 +43,10 @@ body {
 }
 
 /* Header */
+.view-category{
+    font-size: 16px;
+    margin-left: 8px;
+}
 .header {
     color: var(--primary-color);
     padding: 1.6rem;
@@ -51,7 +55,7 @@ body {
 }
 
 .header-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin: 10px 0;
 }
@@ -79,12 +83,12 @@ body {
 }
 
 .sidebar-item {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     width: 100%;
     margin: 16px 0;
     cursor: pointer;
-    font-size: 1.75rem;
+    font-size: 1.70rem;
 }
 
 .sidebar-item.active {
@@ -190,5 +194,12 @@ body {
     font-size: 1.6rem;
     margin-right: 1.6rem;
     opacity: 0.25;
+    cursor: pointer;
+}
+
+.fa-trash-alt{
+    font-size: 1.2rem;
+    margin-left: 1.6rem;
+    opacity: 0.5;
     cursor: pointer;
 }
