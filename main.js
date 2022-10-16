@@ -1,11 +1,10 @@
 'use strict';
 // Selectors for new category form
-const newCategoryForm = document.querySelector('[data-new-category-form]'); // В форме находится инпут и кнопка
-const newCategoryInput = document.querySelector('[data-new-category-input]'); // Получаем инпут
+const newCategoryForm = document.querySelector('[data-new-category-form]');
+const newCategoryInput = document.querySelector('[data-new-category-input]'); 
 
 // Selector for categories container
 const categoriesContainer = document.querySelector('[data-categories]');
-//const romoveCategoryButton = document.querySelector('[]')
 // Selector for new todo form
 const curentlyViewingLable = document.querySelector('[data-currently-viewing]')
 const newTodoForm = document.querySelector('[data-new-todo-form]');
@@ -24,6 +23,8 @@ const todosContainer = document.querySelector('[data-cards]');
 // Local storage keys
 const LOCAL_STORAGE_CATEGORIES_KEYS = 'LOCAL_STORAGE_CATEGORIES_KEYS';
 const LOCAL_STORAGE_TODOS_KEYS = 'LOCAL_STORAGE_TODOS_KEYS';
+// Sidebar-color selectors
+const sideBarColor = document.querySelector('sidebar-color');
 
 let curentViewTodos = null;
 
@@ -34,7 +35,6 @@ let todos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_TODOS_KEYS)) || [];
 // Add categories
 newCategoryForm.addEventListener('submit', event => {
   event.preventDefault();
-  // Get value from input field
   const category = newCategoryInput.value;
 
   // Validation
@@ -53,6 +53,21 @@ newCategoryForm.addEventListener('submit', event => {
 
   saveAndRender();
 });
+
+// Change category color
+categoriesContainer.addEventListener('change', event => {
+  if(event.target.tagName.toLowerCase() == 'input') {
+    const newCategoryColor = event.target.value;
+    const categoryId = event.target.parentElement.getAttribute('data-category-id')
+    console.log(categoryId)
+    const categoryToEdit = categories.find((category) => category._id === categoryId);
+    console.log(categoryToEdit)
+    categoryToEdit.color = newCategoryColor;
+    saveAndRender()
+  }
+})
+
+
 // Delete category
 let index = null
 categoriesContainer.addEventListener('click', event => {
@@ -126,15 +141,11 @@ todosContainer.addEventListener('click', event => {
     const curentViewTodoToDelete = curentViewTodos.findIndex(todo => todo._id === event.target.dataset.deleteTodo);
     curentViewTodos.splice(todoToDeleteIndex, 1);
   }
-    
-
     saveAndRender();
   }
 });
 
 // Show current category
-
-
 curentCategoryView.addEventListener('change',event => {
   curentViewTodos = todos.filter(todo => todo.categoryId == curentCategoryView.value)
   if(curentViewTodos.length == 0){
@@ -173,13 +184,11 @@ function renderCategories() {
   categoriesContainer.innerHTML += `<li class="sidebar-item">All Categories</li>`;
   categories.forEach(({ _id, category, color }) => {
     categoriesContainer.innerHTML += `
-    <li class="sidebar-item" data-category-id${_id}>
+    <li class="sidebar-item" data-category-id=${_id}>
     ${category}
     <input type="color" value=${color} class="sidebar-color">
     <i class="far fa-trash-alt" data-remove-btn=${_id}></i>
     </li>`;
-
-    // <button class="remove-btn" data-remove-btn=${_id}>remove<button>
   });
 }
 
@@ -194,7 +203,7 @@ function renderFormOptions() {
     curentCategoryView.innerHTML += `<option value=${_id}>${category}</option>`;
   });
 }
-/////////////////////////////////////////////////
+
 function renderTodos() {
 
   if (curentViewTodos == null){
@@ -203,6 +212,7 @@ function renderTodos() {
 
       // Get Complimentary categoryDetails Based On TaskId
       const { color, category } = categories.find(({ _id }) => _id === categoryId);
+      
       const backgroundColor = convertHexToRGBA(color, 20);
       curentlyViewingLable.innerHTML =`
       <div class="currently-viewing" data-currently-viewing>
